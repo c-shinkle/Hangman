@@ -1,9 +1,9 @@
 import unittest
-from src import string_checker
+from src import Hangman
 
-class StringCheckerTests(unittest.TestCase):
+class HangmanTests(unittest.TestCase):
   def test_check_if_letter_is_in_word(self):
-    containsLetter = string_checker.check("Christian", "C")
+    containsLetter = Hangman.check("Christian", "C")
     self.assertEqual(containsLetter, True)
 
 if __name__ == '__main__':
