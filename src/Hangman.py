@@ -3,3 +3,4 @@ def check(word, guess):
     if (guess == word[i]):
       return True
   return False
+
