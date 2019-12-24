@@ -4,9 +4,9 @@ from src.Hangman import check
 from src.Hangman import game_turn
 
 class HangmanTests(unittest.TestCase):
-  def test_check_if_letter_is_in_word(self):
+  def test_when_letter_is_guessed_it_returns_true(self):
     containsLetter = check("Christian", "C")
-    self.assertEqual(containsLetter, True)
+    self.assertTrue(containsLetter)
 
   def test_when_all_letter_are_guessed_they_all_return_true(self):
     for letter in "Christian":
