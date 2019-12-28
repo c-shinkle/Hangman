@@ -10,8 +10,10 @@ def get_input():
 def game_turn(word):
   guess = get_input()
   if check(word, guess):
+    print("Good job! {} is in the word".format(guess))
     return True
   else:
+    print("Tough luck, {} is not the word".format(guess))
     return False
 
 def game_loop(word):
