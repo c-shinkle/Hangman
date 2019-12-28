@@ -20,5 +20,6 @@ class HangmanTests(unittest.TestCase):
     mock_get_input.side_effect = ['a', 'b', 'c']
     self.assertFalse(game_loop("xyz"))
 
+  
 if __name__ == '__main__':
     unittest.main()

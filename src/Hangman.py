@@ -19,9 +19,9 @@ def game_turn(word):
 def game_loop(word):
   misses = 0
   while (misses < 3):
-    isSuccessful = game_turn(word)
-    if (not isSuccessful):
-      misses+=1
-    else:
+    correct = game_turn(word)
+    if (correct):
       return True
+    else:
+      misses+=1
   return False
