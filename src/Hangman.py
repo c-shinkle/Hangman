@@ -13,3 +13,13 @@ def game_turn(word):
     return True
   else:
     return False
+
+def game_loop(word):
+  misses = 0
+  while (misses < 3):
+    isSuccessful = game_turn(word)
+    if (not isSuccessful):
+      misses+=1
+    else:
+      return True
+  return False

@@ -1,7 +1,6 @@
 import unittest
-from unittest.mock import patch
-from src.Hangman import check
-from src.Hangman import game_turn
+from unittest.mock import patch, Mock, call
+from src.Hangman import check, game_turn, game_loop
 
 class HangmanTests(unittest.TestCase):
   def test_when_letter_is_guessed_it_returns_true(self):
@@ -16,6 +15,10 @@ class HangmanTests(unittest.TestCase):
   def test_when_user_guesses_letter_game_checks_letter(self, input):
     self.assertTrue(game_turn("Christian"))
   
-  
+  @patch("src.Hangman.get_input")
+  def test_when_user_guesses_three_wrong_game_is_over(self, mock_get_input):
+    mock_get_input.side_effect = ['a', 'b', 'c']
+    self.assertFalse(game_loop("xyz"))
+
 if __name__ == '__main__':
     unittest.main()
