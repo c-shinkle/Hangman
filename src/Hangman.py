@@ -1,15 +1,12 @@
-def check(word, guess):
-  for i in range(len(word)):
-    if (guess == word[i]):
-      return True
-  return False
+def check(letters, guess):
+  return letters[guess]
 
 def get_input():
   return input("What's your guess? ")
 
-def game_turn(word, letters):
+def game_turn(letters):
   guess = get_input()
-  if check(word, guess):
+  if check(letters, guess):
     print("Good job! '{}' is in the word".format(guess))
     letters[guess] = False
     return True
@@ -27,7 +24,7 @@ def game_loop(word):
   misses = 0
   letters = createLookupDict(word)
   while (misses < 3):
-    correct = game_turn(word, letters)
+    correct = game_turn(letters)
     if (correct):
       if (all(not value for value in letters.values())):
         return True
