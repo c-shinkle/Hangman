@@ -5,7 +5,7 @@ def get_input():
   return input("What's your guess? ")
 
 def game_turn(letters):
-  guess = get_input()
+  guess = get_input().lower()
   if check(letters, guess):
     print("Good job! '{}' is in the word".format(guess))
     letters[guess] = False
@@ -16,7 +16,7 @@ def game_turn(letters):
 
 def createLookupDict(word):
   letters = dict.fromkeys('abcdefghijklmnopqrstuvwxyz', False)
-  for letter in word:
+  for letter in word.lower():
     letters[letter] = True
   return letters
 
