@@ -15,7 +15,7 @@ class HangmanTests(unittest.TestCase):
 
   @patch("src.Hangman.get_input", return_value="c")
   def test_when_user_guesses_letter_game_checks_letter(self, mock_get_input):
-    self.assertTrue(game_turn(createLookupDict(self.test_string)))
+    self.assertTrue(game_turn(createLookupDict(self.test_string), set()))
     self.assertTrue(mock_get_input.called)
   
   @patch("src.Hangman.get_input", side_effect=['a', 'b', 'c'])
@@ -30,8 +30,15 @@ class HangmanTests(unittest.TestCase):
 
   @patch("src.Hangman.get_input", return_value="x")
   def test_when_user_guesses_uppercase_letters_game_allows_it(self, mock_get_input):
-    self.assertTrue(game_turn(createLookupDict("XYZ")))
+    self.assertTrue(game_turn(createLookupDict("XYZ"), set()))
     self.assertTrue(mock_get_input.called)
+  
+  @patch("src.Hangman.get_input", side_effect=['x', 'y', 'x', 'z'])
+  @patch("builtins.print")
+  def test_when_user_enters_same_letter_multiple_times_game_tells_user(self, mock_print, mock_get_input):
+    self.assertTrue(game_loop("xyz"))
+    mock_print.assert_any_call("You already guessed 'x'! Try again")
+    self.assertEquals(4, mock_get_input.call_count)   
 
 if __name__ == '__main__':
     unittest.main()
