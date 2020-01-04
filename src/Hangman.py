@@ -8,12 +8,12 @@ def game_turn(letters_left_to_guess, guessed_letters):
   guess = get_input().lower()
   if guess in guessed_letters:
     print("You already guessed '{}'! Try again".format(guess))
-    return True
+    return guess
   elif check(letters_left_to_guess, guess):
     print("Good job! '{}' is in the word".format(guess))
     letters_left_to_guess[guess] = False
     guessed_letters.add(guess)
-    return True
+    return guess
   else:
     print("Tough luck, '{}' is not the word".format(guess))
     return False
@@ -29,17 +29,16 @@ def game_loop(word):
   letters_left_to_guess = createLookupDict(word)
   guessed_letters = set()
   so_far = list('_' * len(word))
+  print("".join(so_far))
   while misses < 3:
-    #print off letters already guessed
-    for guessed_letter in guessed_letters:
-      indices = [pos for pos, char in enumerate(word) if char == guessed_letter]
+    result = game_turn(letters_left_to_guess, guessed_letters)
+    if result:
+      indices = [pos for pos, char in enumerate(word) if char == result]
       for index in indices:
-        so_far[index] = guessed_letter
-    print("".join(so_far))
-    correct = game_turn(letters_left_to_guess, guessed_letters)
-    if correct:
+        so_far[index] = result
       if all(not value for value in letters_left_to_guess.values()):
         return True
     else:
       misses+=1
+    print("".join(so_far))
   return False
