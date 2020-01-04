@@ -18,19 +18,22 @@ def game_turn(letters_left_to_guess, guessed_letters):
     print("Tough luck, '{}' is not the word".format(guess))
     return False
 
-def createLookupSet(word):
+def create_lookup_set(word):
   return set(char for char in word.lower())
+
+def create_letter_indices_list(word, letter):
+  return [pos for pos, char in enumerate(word) if char == letter]
 
 def game_loop(word):
   misses = 0
-  letters_left_to_guess = createLookupSet(word)
+  letters_left_to_guess = create_lookup_set(word)
   guessed_letters = set()
   so_far = list('_' * len(word))
   print("".join(so_far))
   while misses < 3:
     result = game_turn(letters_left_to_guess, guessed_letters)
     if result:
-      indices = [pos for pos, char in enumerate(word) if char == result]
+      indices = create_letter_indices_list
       for index in indices:
         so_far[index] = result
       if not letters_left_to_guess:
