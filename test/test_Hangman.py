@@ -38,7 +38,15 @@ class HangmanTests(unittest.TestCase):
   def test_when_user_enters_same_letter_multiple_times_game_tells_user(self, mock_print, mock_get_input):
     self.assertTrue(game_loop("xyz"))
     mock_print.assert_any_call("You already guessed 'x'! Try again")
-    self.assertEquals(4, mock_get_input.call_count)   
+    self.assertEquals(4, mock_get_input.call_count)
+
+  @patch("src.Hangman.get_input", side_effect=['x', 'y', 'z'])
+  @patch("builtins.print")
+  def test_when_user_begins_turn_game_tells_how_many_are_guessed_correctly(self, mock_print, mock_get_input):
+    self.assertTrue(game_loop("xyz"))
+    mock_print.assert_any_call("___")
+    mock_print.assert_any_call("x__")
+    mock_print.assert_any_call("xy_")
 
 if __name__ == '__main__':
     unittest.main()

@@ -28,7 +28,14 @@ def game_loop(word):
   misses = 0
   letters_left_to_guess = createLookupDict(word)
   guessed_letters = set()
+  so_far = list('_' * len(word))
   while (misses < 3):
+    #print off letters already guessed
+    for guessed_letter in guessed_letters:
+      indices = [pos for pos, char in enumerate(word) if char == guessed_letter]
+      for index in indices:
+        so_far[index] = guessed_letter
+    print("".join(so_far))
     correct = game_turn(letters_left_to_guess, guessed_letters)
     if (correct):
       if (all(not value for value in letters_left_to_guess.values())):
