@@ -29,8 +29,8 @@ def game_loop(word):
   letters_left_to_guess = create_lookup_set(word)
   guessed_letters = set()
   so_far = list('_' * len(word))
-  print("".join(so_far))
   while misses < 3:
+    print("".join(so_far))
     result = game_turn(letters_left_to_guess, guessed_letters)
     if result:
       indices = create_letter_indices_list(word, result)
@@ -40,5 +40,4 @@ def game_loop(word):
         return True
     else:
       misses+=1
-    print("".join(so_far))
   return False
