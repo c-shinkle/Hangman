@@ -32,6 +32,15 @@ class HangmanTests(unittest.TestCase):
   def test_when_user_guesses_uppercase_letters_game_allows_it(self, mock_get_input):
     self.assertTrue(game_turn(create_lookup_set("XYZ"), set()))
     self.assertTrue(mock_get_input.called)
+
+  @patch("src.Hangman.get_input", side_effect=['x', 'y', 'z'])
+  @patch("builtins.print")
+  def test_when_game_word_has_uppercase_letters_user_can_guess_lowercase_letters(self, mock_print, mock_get_input):
+    self.assertTrue(game_loop("XYZ"))
+    mock_print.assert_any_call("___")
+    mock_print.assert_any_call("x__")
+    mock_print.assert_any_call("xy_")
+    mock_print.assert_any_call("Congratulations, you win! The word was xyz")
   
   @patch("src.Hangman.get_input", side_effect=['x', 'y', 'x', 'z'])
   @patch("builtins.print")
@@ -47,6 +56,7 @@ class HangmanTests(unittest.TestCase):
     mock_print.assert_any_call("___")
     mock_print.assert_any_call("x__")
     mock_print.assert_any_call("xy_")
+    mock_print.assert_any_call("Congratulations, you win! The word was xyz")
 
 if __name__ == '__main__':
     unittest.main()

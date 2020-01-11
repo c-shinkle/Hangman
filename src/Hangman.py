@@ -25,6 +25,7 @@ def create_letter_indices_list(word, letter):
   return list(pos for pos, char in enumerate(word) if char == letter)
 
 def game_loop(word):
+  word = word.lower()
   misses = 0
   letters_left_to_guess = create_lookup_set(word)
   guessed_letters = set()
@@ -37,6 +38,7 @@ def game_loop(word):
       for index in indices:
         so_far[index] = result
       if not letters_left_to_guess:
+        print("Congratulations, you win! The word was {}".format(word))
         return True
     else:
       misses+=1
