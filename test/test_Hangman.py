@@ -1,17 +1,9 @@
-import unittest
-from unittest.mock import patch, Mock, call
-from src.Hangman import check, game_turn, game_loop, create_lookup_set
+from unittest import TestCase
+from unittest.mock import patch
+from src.Hangman import game_turn, game_loop, create_lookup_set
 
-class HangmanTests(unittest.TestCase):
+class HangmanTests(TestCase):
   test_string = "Christian"
-  def test_when_letter_is_guessed_it_returns_true(self):
-    self.assertTrue(check(create_lookup_set(self.test_string), "c"))
-
-  def test_when_all_letter_are_guessed_they_all_return_true(self):
-    letters = create_lookup_set(self.test_string)
-    for letter in self.test_string.lower():
-      with self.subTest(letter=letter):
-        self.assertTrue(check(letters, letter))
 
   @patch("src.Hangman.get_input", return_value="c")
   def test_when_user_guesses_letter_game_checks_letter(self, mock_get_input):

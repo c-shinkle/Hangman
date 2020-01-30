@@ -1,6 +1,3 @@
-def check(letters, guess):
-  return guess in letters
-
 def get_input():
   return input("What's your guess? ")
 
@@ -9,7 +6,7 @@ def game_turn(letters_left_to_guess, guessed_letters):
   if guess in guessed_letters:
     print("You already guessed '{}'! Try again".format(guess))
     return guess
-  elif check(letters_left_to_guess, guess):
+  elif guess in letters_left_to_guess:
     print("Good job! '{}' is in the word".format(guess))
     letters_left_to_guess.remove(guess)
     guessed_letters.add(guess)
