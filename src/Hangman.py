@@ -15,16 +15,17 @@ def game_turn(letters_left_to_guess, guessed_letters):
     print("Tough luck, '{}' is not the word".format(guess))
     return False
 
-def create_lookup_set(word):
-  return set(char for char in word.lower())
+def create_letters_set(word):
+  return set(char for char in word)
 
 def create_letter_indices_list(word, letter):
   return list(pos for pos, char in enumerate(word) if char == letter)
 
 def game_loop(word):
+  original_word = word
   word = word.lower()
   misses = 0
-  letters_left_to_guess = create_lookup_set(word)
+  letters_left_to_guess = create_letters_set(word)
   guessed_letters = set()
   so_far = list('_' * len(word))
   while misses < 3:
@@ -33,7 +34,7 @@ def game_loop(word):
     if result:
       indices = create_letter_indices_list(word, result)
       for index in indices:
-        so_far[index] = result
+        so_far[index] = original_word[index]
       if not letters_left_to_guess:
         print("Congratulations, you win! The word was {}".format(word))
         return True

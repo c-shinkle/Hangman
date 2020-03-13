@@ -1,18 +1,18 @@
 from unittest import TestCase
 from unittest.mock import patch
-from src.Hangman import game_turn, game_loop, create_lookup_set
+from src.Hangman import game_turn, game_loop, create_letters_set
 
 class HangmanTests(TestCase):
-  test_string = "Christian"
 
-  @patch("src.Hangman.get_input", return_value="c")
+  @patch("src.Hangman.get_input", return_value="x")
   def test_when_user_guesses_letter_game_checks_letter(self, mock_get_input):
-    self.assertTrue(game_turn(create_lookup_set(self.test_string), set()))
+    letters = set(char for char in 'x')
+    self.assertTrue(game_turn(letters, set()))
     self.assertTrue(mock_get_input.called)
   
   @patch("src.Hangman.get_input", side_effect=['a', 'b', 'c'])
   def test_when_user_guesses_three_wrong_game_is_over(self, mock_get_input):
-    self.assertFalse(game_loop("xyz"))
+    self.assertFalse(game_loop('xyz'))
     self.assertEquals(3, mock_get_input.call_count)
 
   @patch("src.Hangman.get_input", side_effect=['x', 'y', 'z'])
@@ -20,15 +20,16 @@ class HangmanTests(TestCase):
     self.assertTrue(game_loop("xyz"))
     self.assertEquals(3, mock_get_input.call_count)
 
-  @patch("src.Hangman.get_input", return_value="x")
+  @patch("src.Hangman.get_input", return_value='x')
   def test_when_user_guesses_uppercase_letters_game_allows_it(self, mock_get_input):
-    self.assertTrue(game_turn(create_lookup_set("XYZ"), set()))
+    letters = set(char for char in 'xyz')
+    self.assertEquals('x', game_turn(letters, set()))
     self.assertTrue(mock_get_input.called)
 
   @patch("src.Hangman.get_input", side_effect=['x', 'y', 'z'])
   @patch("builtins.print")
   def test_when_game_word_has_uppercase_letters_user_can_guess_lowercase_letters(self, mock_print, mock_get_input):
-    self.assertTrue(game_loop("XYZ"))
+    self.assertTrue(game_loop("xyz"))
     mock_print.assert_any_call("___")
     mock_print.assert_any_call("x__")
     mock_print.assert_any_call("xy_")
