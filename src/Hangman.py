@@ -1,25 +1,3 @@
-def get_input():
-  return input("What's your guess? ")
-
-def game_turn(letters_left_to_guess, guessed_letters):
-  guess = get_input().lower()
-  if guess in guessed_letters:
-    print("You already guessed '{}'! Try again".format(guess))
-    return guess
-  elif guess in letters_left_to_guess:
-    print("Good job! '{}' is in the word".format(guess))
-    letters_left_to_guess.remove(guess)
-    guessed_letters.add(guess)
-    return guess
-  else:
-    print("Tough luck, '{}' is not the word".format(guess))
-    return False
-
-def create_letters_set(word):
-  return set(char for char in word)
-
-def create_letter_indices_list(word, letter):
-  return list(pos for pos, char in enumerate(word) if char == letter)
 
 def game_loop(word):
   original_word = word
@@ -41,3 +19,32 @@ def game_loop(word):
     else:
       misses+=1
   return False
+
+ 
+def game_turn(letters_left_to_guess, guessed_letters):
+  guess = get_input().lower()
+  if guess in guessed_letters:
+    print("You already guessed '{}'! Try again".format(guess))
+    return guess
+  elif guess in letters_left_to_guess:
+    print("Good job! '{}' is in the word".format(guess))
+    letters_left_to_guess.remove(guess)
+    guessed_letters.add(guess)
+    return guess
+  else:
+    print("Tough luck, '{}' is not the word".format(guess))
+    return False
+
+ 
+def create_letters_set(word):
+  return set(char for char in word)
+
+
+
+def create_letter_indices_list(word, letter):
+  return list(pos for pos, char in enumerate(word) if char == letter)
+
+
+def get_input():
+  return input("What's your guess? ")
+
