@@ -1,14 +1,6 @@
 from typing import Optional, Set
 
 
-def create_lookup_set(word: str) -> Set[str]:
-    return set(char for char in word.lower())
-
-
-def create_letter_indices_list(word: str, letter: str) -> list[int]:
-    return list(pos for pos, char in enumerate(word) if char == letter)
-
-
 def game_turn(letters_left_to_guess: Set[str], guessed_letters: Set[str]) -> Optional[str]:
     guess = input("What's your guess? ").lower()
     if guess in guessed_letters:
@@ -24,26 +16,28 @@ def game_turn(letters_left_to_guess: Set[str], guessed_letters: Set[str]) -> Opt
         return None
 
 
-def game_loop(word: str) -> bool:
-    word = word.lower()
+def game_loop(secret_word: str) -> bool:
+    secret_word = secret_word.lower()
     misses: int = 0
-    letters_left_to_guess: Set[str] = create_lookup_set(word)
+    letters_left_to_guess: Set[str] = set(char for char in secret_word.lower())
     guessed_letters: Set[str] = set()
-    so_far = list('_' * len(word))
+    so_far = list('_' * len(secret_word))
 
     while misses < 3:
         print("".join(so_far))
-        result = game_turn(letters_left_to_guess, guessed_letters)
-        if result is not None:
-            indices = create_letter_indices_list(word, result)
+        letter = game_turn(letters_left_to_guess, guessed_letters)
+
+        if letter is not None:
+            indices = list(pos for pos, char in enumerate(secret_word) if char == letter)
             for index in indices:
-                so_far[index] = result
+                so_far[index] = letter
             if len(letters_left_to_guess) == 0:
-                print("Congratulations, you win! The word was {}".format(word))
+                print("Congratulations, you win! The word was {}".format(secret_word))
                 return True
         else:
             misses += 1
     return False
+
 
 if __name__ == '__main__':
     word = 'adage'
