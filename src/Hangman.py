@@ -1,12 +1,15 @@
-def create_lookup_set(word):
+from typing import Optional, Set
+
+
+def create_lookup_set(word: str) -> Set[str]:
     return set(char for char in word.lower())
 
 
-def create_letter_indices_list(word, letter):
+def create_letter_indices_list(word: str, letter: str) -> list[int]:
     return list(pos for pos, char in enumerate(word) if char == letter)
 
 
-def game_turn(letters_left_to_guess, guessed_letters):
+def game_turn(letters_left_to_guess: Set[str], guessed_letters: Set[str]) -> Optional[str]:
     guess = input("What's your guess? ").lower()
     if guess in guessed_letters:
         print("You already guessed '{}'! Try again".format(guess))
@@ -18,19 +21,20 @@ def game_turn(letters_left_to_guess, guessed_letters):
         return guess
     else:
         print("Tough luck, '{}' is not the word".format(guess))
-        return False
+        return None
 
 
-def game_loop(word):
+def game_loop(word: str) -> bool:
     word = word.lower()
-    misses = 0
-    letters_left_to_guess = create_lookup_set(word)
-    guessed_letters = set()
+    misses: int = 0
+    letters_left_to_guess: Set[str] = create_lookup_set(word)
+    guessed_letters: Set[str] = set()
     so_far = list('_' * len(word))
+
     while misses < 3:
         print("".join(so_far))
         result = game_turn(letters_left_to_guess, guessed_letters)
-        if result:
+        if result is not None:
             indices = create_letter_indices_list(word, result)
             for index in indices:
                 so_far[index] = result
@@ -40,3 +44,8 @@ def game_loop(word):
         else:
             misses += 1
     return False
+
+if __name__ == '__main__':
+    word = 'adage'
+    print("Variable type:", type(word[0]))
+    game_loop(word)
